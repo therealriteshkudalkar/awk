@@ -182,15 +182,37 @@ It represents (input) record separator and its default value is newline.
 
 ---
 
-## Conditional Statements
+## Control FLow Statements
 
-awk also works with conditinal statements
+awk provides conditional statements to control the flow of a program. It supports if, if-else and if-else ladder. The syntax of which is as follows:
+
+```
+awk '{ if (condition) 
+          awk_command;
+        else 
+          awk_command;
+    }' filename
+```
 
 ---
 
 ## Looping Constructs
 
-we can also use a looping construct, making it one of the most versatile and powerful command in the terminal
+We can also use looping construct, like for loop, while loop, making it one of the most versatile and powerful command in the terminal. The syntax is as follows:
+
+```
+awk '{ for (initialization; condition; increment/decrement) {
+        awk_command;
+      }
+    }' filename
+```
+
+```
+awk '{ while (condition) {
+        awk_command;
+      }
+    }' filename
+```
 
 ---
 
@@ -198,11 +220,40 @@ we can also use a looping construct, making it one of the most versatile and pow
 
 With awk, we can work with the following flags:
 
+<br>
+
 ### -F <u>fs</u>
 
 The -F fs option defines the input field separator to be the regular expression fs.
 
-###
+```shell
+~$ awk -F ',' '{print $2 "\t" $3} sales.txt
+```
+
+<br>
+
+### -f <u>progfile</u>
+
+The -f progfile option is used to specify the pattern or the block argument inside a file rather than typing it out in its entirity.
+
+```shell
+~$ awk -f cal_sal.awk sales.txt
+```
+
+The cal_sal.awk contains the following code
+
+```shell
+{
+  sales[i++]=$2;
+  sum=0;
+}
+END {
+  for (i in sales) {
+    sum=sum+sales[i];
+  }
+  print "Total sales amount=" sum;
+}
+```
 
 ---
 
@@ -218,7 +269,18 @@ There are no explicit conversions between numbers and strings.  To force an expr
 
 ## Examples
 
-This is a text
+```shell
+~$ awk ' { if ($2 % 2 == 0) 
+              print "marks are even for " $3;
+            else 
+              print "marks are odd for " $3;
+          }' marks.txt
+```
+
+for loop
+
+for loop with a conditional statement
+say you wanted to calculate the number of year
 
 ---
 
