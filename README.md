@@ -20,14 +20,14 @@ _**awk**_ works by scanning the input line by line. Compares input line/fields t
 
 ### General Syntax
 
-```shell
-~$ awk [flags] '[BEGIN {action}] [pattern] {action} [END {action}]' input_file > output_file
+```bash
+awk [flags] '[BEGIN {action}] [pattern] {action} [END {action}]' input_file > output_file
 ```
 
 A great way to understand any linux command is to to `man` it.
 
 ```shell
-~$ man awk
+man awk
 ```
 
 ## Structure
@@ -67,16 +67,16 @@ The following command carry special meaning in the awk argument:
 
 The print statement prints its arguments on the standard output (or on a file if > file  or >> file  is present or on a pipe if | cmd  is present), separated by the current output field separator, and terminated by the output record separator.  file and cmd may be literal names or parenthesized expressions; identical string values in different statements denote the same open file.
 
-```shell
-~$ awk '{print $3 "\t" $4}' marks.txt
+```bash
+awk '{print $3 "\t" $4}' marks.txt
 ```
 
 ### printf
 
 The printf statement formats its expression list according to the format provided.
 
-```shell
-~$ awk '{printf "%5.1f\n", $1}' marks.txt
+```bash
+awk '{printf "%5.1f\n", $1}' marks.txt
 ```
 
 ## Standard awk Variables
@@ -87,24 +87,24 @@ awk provides several built-in variables. They play an important role while writi
 
 It represents the nth field in the current record where the fields are separated by FS.
 
-```shell
-~$ awk '{print $3 "\t" $4}' marks.txt
+```bash
+awk '{print $3 "\t" $4}' marks.txt
 ```
 
 ### ARGC
 
 It implies the number of arguments provided at the command line.
 
-```shell
-~$ awk 'BEGIN {print "Arguments =", ARGC}' One Two Three Four
+```bash
+awk 'BEGIN {print "Arguments =", ARGC}' One Two Three Four
 ```
 
 ### ARGV
 
 It is an array that stores the command-line arguments. The array's valid index ranges from 0 to ARGC-1.
 
-```shell
-~$ awk 'BEGIN { 
+```bash
+awk 'BEGIN { 
     for (i = 0; i < ARGC - 1; ++i) { 
       printf "ARGV[%d] = %s\n", i, ARGV[i] 
     } 
@@ -115,32 +115,32 @@ It is an array that stores the command-line arguments. The array's valid index r
 
 It represents the (input) field separator and its default value is space. You can also change this by using -F command line option.
 
-```shell
-~$ awk 'BEGIN {print "FS = " FS}' marks.txt
+```bash
+awk 'BEGIN {print "FS = " FS}' marks.txt
 ```
 
 ### NF
 
 It represents the number of fields in the current record. For instance, the following example prints only those lines that contain more than two fields.
 
-```shell
-~$ awk 'NF > 2' test.txt
+```bash
+awk 'NF > 2' test.txt
 ```
 
 ### NR
 
 It represents the number of the current record. For instance, the following example prints the record if the current record number is less than three.
 
-```shell
-~$ awk 'BEGIN {print "FS = " FS}' marks.txt
+```bash
+awk 'BEGIN {print "FS = " FS}' marks.txt
 ```
 
 ### RS
 
 It represents (input) record separator and its default value is newline.
 
-```shell
-~$ awk awk 'BEGIN {print "RS = " RS}' marks.txt
+```bash
+awk 'BEGIN {print "RS = " RS}' marks.txt
 ```
 
 ## Control FLow Statements
@@ -181,21 +181,21 @@ With awk, we can work with the following flags:
 
 The -F fs option defines the input field separator to be the regular expression fs.
 
-```shell
-~$ awk -F ',' '{print $2 "\t" $3} sales.txt
+```bash
+awk -F ',' '{print $2 "\t" $3} sales.txt
 ```
 
 ### -f <u>progfile</u>
 
 The -f progfile option is used to specify the pattern or the block argument inside a file rather than typing it out in its entirity.
 
-```shell
-~$ awk -f cal_sal.awk sales.txt
+```bash
+awk -f cal_sal.awk sales.txt
 ```
 
 The cal_sal.awk contains the following code
 
-```shell
+```bash
 {
   sales[i++]=$2;
   sum=0;
@@ -246,62 +246,62 @@ Tarun,53,84,50,87,53,48
 
 Say I want to print only the name of the students.
 
-```shell
-~$ awk '{ print $1 }' marks.txt
+```bash
+awk '{ print $1 }' marks.txt
 ```
 
 By default the field delimiter is a space. Say I have a file that is not space separated but comma separated.
 
-```shell
-~$ awk -F ',' '{ print $1 }' marks2.txt
+```bash
+awk -F ',' '{ print $1 }' marks2.txt
 ```
 
 Now lets say I want the name and marks of all students whose name contains a `u`.
 
-```shell
-~$ awk '/u/ { print $0 }' marks.txt
+```bash
+awk '/u/ { print $0 }' marks.txt
 ```
 
 I want marks of students whose name starts with `A` and I want their marks in Physics.
 
-```shell
-~$ awk '/^A/ { print $1 "\t" $4 }' marks.txt
+```bash
+awk '/^A/ { print $1 "\t" $4 }' marks.txt
 ```
 
 I want to look at the permissions of files that end with `.txt`
 
-```shell
-~$ ls -al | awk '/.txt$/ {print $1 "\t" $NF }'
+```bash
+ls -al | awk '/.txt$/ {print $1 "\t" $NF }'
 ```
 
 Now say, I want to look at marks of students whose score in English is odd.
 
-```shell
-~$ awk '{ if($5 % 2 != 0) print $0 }' marks.txt
+```bash
+awk '{ if($5 % 2 != 0) print $0 }' marks.txt
 ```
 
 Say I want to print whether the marks in English are divisible by 3.
 
-```shell
-~$ awk 'NR > 1 { if($5 % 3 == 0) print $1 " have their English marks divisible by 3."; else print $1 " dont have their English marks divisible by 3."  }' marks.txt
+```bash
+awk 'NR > 1 { if($5 % 3 == 0) print $1 " have their English marks divisible by 3."; else print $1 " dont have their English marks divisible by 3."  }' marks.txt
 ```
 
 Say I want to print whether the marks in English are divisible by a number specified in the argument.
 
-```shell
-~$ awk 'NR > 1 { if($5 % ARGV[2] == 0) print $1 " have their English marks divisible by " ARGV[2] "."; else print $1 " dont have their English marks divisible by " ARGV[2] "."  }' marks.txt 5
+```bash
+awk 'NR > 1 { if($5 % ARGV[2] == 0) print $1 " have their English marks divisible by " ARGV[2] "."; else print $1 " dont have their English marks divisible by " ARGV[2] "."  }' marks.txt 5
 ```
 
 Say I want to print the average obtained by each student.
 
-```shell
-~$ awk 'BEGIN { print "Name\tAverage" } NR > 1 { curr_sum = 0; for(i = 2; i <=NF; i++) { curr_sum += $i; }; print $1 "\t" curr_sum / (NF - 1) }' marks.txt
+```bash
+awk 'BEGIN { print "Name\tAverage" } NR > 1 { curr_sum = 0; for(i = 2; i <=NF; i++) { curr_sum += $i; }; print $1 "\t" curr_sum / (NF - 1) }' marks.txt
 ```
 
 Say I want the class average in Physics.
 
-```shell
-~$ awk 'BEGIN { sum = 0 } NR > 1 { sum += $4 } END { print "The class average in Physics is " sum / (NR - 1) }' marks.txt
+```bash
+awk 'BEGIN { sum = 0 } NR > 1 { sum += $4 } END { print "The class average in Physics is " sum / (NR - 1) }' marks.txt
 ```
 
 ## References
