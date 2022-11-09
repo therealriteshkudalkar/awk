@@ -30,8 +30,6 @@ A great way to understand any linux command is to to `man` it.
 ~$ man awk
 ```
 
----
-
 ## Structure
 
 The awk argument can be separated into three blocks.
@@ -61,8 +59,6 @@ The END block executes at the end of the program. END is an AWK keyword and henc
 END { awk_commands }
 ```
 
----
-
 ## Standard awk Commands
 
 The following command carry special meaning in the awk argument:
@@ -82,8 +78,6 @@ The printf statement formats its expression list according to the format provide
 ```shell
 ~$ awk '{printf "%5.1f\n", $1}' marks.txt
 ```
-
----
 
 ## Standard awk Variables
 
@@ -149,8 +143,6 @@ It represents (input) record separator and its default value is newline.
 ~$ awk awk 'BEGIN {print "RS = " RS}' marks.txt
 ```
 
----
-
 ## Control FLow Statements
 
 awk provides conditional statements to control the flow of a program. It supports if, if-else and if-else ladder. The syntax of which is as follows:
@@ -162,8 +154,6 @@ awk '{ if (condition)
           awk_command;
     }' filename
 ```
-
----
 
 ## Looping Constructs
 
@@ -182,8 +172,6 @@ awk '{ while (condition) {
       }
     }' filename
 ```
-
----
 
 ## Flags
 
@@ -220,8 +208,6 @@ END {
 }
 ```
 
----
-
 ## Caveats
 
 Only eight-bit characters sets are handled correctly. <sup>[[2]](#references) <sup> 
@@ -230,11 +216,59 @@ The scope rules for variables in functions are a botch; the syntax is worse. <su
 
 There are no explicit conversions between numbers and strings.  To force an expression to be treated as a number add 0 to it; to force it to be treated as a string concatenate "" to it. <sup>[[2]](#references) <sup>
 
----
-
 ## Examples
 
+Let's start with simple example. Say I have a text file marks.txt
 
+```
+Name	Math	History Physics	English	CS	Chemsitry	
+Ayush	90	50	44	90	60	53
+Aman	100	90	53	88	80	64
+Sajal	90	54	53	64	91	84
+Rohit	73	93	36	39	99	93
+Muskan	90	90	88	94	50	46
+Tanvi	80	93	57	66	76	96
+Tarun	53	84	50	87	53	48
+```
+
+and marks2.txt
+
+```
+Name,Math,History,Physics,English,CS,Chemsitry	
+Ayush,90,50,44,90,60,53
+Aman,100,90,53,88,80,64
+Sajal,90,54,53,64,91,84
+Rohit,73,93,36,39,99,93
+Muskan,90,90,88,94,50,46
+Tanvi,80,93,57,66,76,96
+Tarun,53,84,50,87,53,48
+```
+
+Say I want to print only the name of the students.
+
+```shell
+~$ awk '{ print $1 }' marks.txt
+```
+
+By default the field delimiter is a space. Say I have a file that is not space separated but comma separated.
+
+```shell
+~$ awk -F ',' '{ print $1 }' marks2.txt
+```
+
+Now lets say I want the name and marks of all students whose name contains a `u`.
+
+```shell
+~$ awk '/u/{ print $0 }' marks.txt
+```
+
+I want marks of students whose name starts with `A` and I want their marks in Physics.
+
+```shell
+~$ awk '/^A/{ print $1 "\t" $4 }' marks.txt
+```
+
+Now I want marks of 
 
 ```shell
 ~$ awk ' { if ($2 % 2 == 0) 
@@ -244,12 +278,12 @@ There are no explicit conversions between numbers and strings.  To force an expr
           }' marks.txt
 ```
 
+Now lets say
+
 for loop
 
 for loop with a conditional statement
 say you wanted to calculate the number of year
-
----
 
 ## References
 
@@ -257,5 +291,3 @@ say you wanted to calculate the number of year
 
 
 2. Linux Manual (man awk)
-
----
